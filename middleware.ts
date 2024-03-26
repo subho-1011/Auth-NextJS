@@ -8,7 +8,7 @@ const { auth } = NextAuth(authConfig);
 
 export default auth((req) => {
     const { nextUrl } = req;
-    const isLoggedIn = req.auth;
+    const isLoggedIn = !!req.auth;
 
     const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
     const isAuthRoute = authRoutes.includes(nextUrl.pathname);
@@ -18,8 +18,7 @@ export default auth((req) => {
         return NextResponse.next();
     }
 
-    console.log(isLoggedIn);
-    if (isLoggedIn === null) {
+    if (!isLoggedIn) {
         return NextResponse.redirect(new URL("/auth/login", nextUrl));
     }
 
