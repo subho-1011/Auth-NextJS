@@ -1,5 +1,4 @@
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
-import React from "react";
 
 type FormSuccessProps = {
     message?: string;

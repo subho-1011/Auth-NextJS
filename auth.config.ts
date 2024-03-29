@@ -2,8 +2,7 @@ import bcrypt from "bcryptjs";
 
 import type { NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { getUserByEmail } from "./data/user";
-import { LoginSchemaType } from "@/schemas";
+import { getUserByEmail } from "@/data/user";
 import Github from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 
@@ -18,14 +17,21 @@ export default {
             clientSecret: process.env.GITHUB_CLIENT_SECRET,
         }),
         Credentials({
-            async authorize(credentials: LoginSchemaType) {
+            async authorize(credentials) {
                 if (credentials) {
                     const { email, password } = credentials;
 
-                    const user = await getUserByEmail(email);
+                    if (!email && !password) {
+                        return null;
+                    }
+
+                    const user = await getUserByEmail(email as string);
                     if (!user || !user.password) return null;
 
-                    const passwordMatch = !!bcrypt.compare(password, user.password);
+                    const passwordMatch = !!(await bcrypt.compare(
+                        password as string,
+                        user.password
+                    ));
 
                     if (passwordMatch) return user;
                 }

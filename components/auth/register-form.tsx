@@ -5,14 +5,22 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterSchema } from "@/schemas";
 import { useForm } from "react-hook-form";
 
+import { useState, useTransition } from "react";
+
 import { CardWrapper } from "./card-wrapper";
-import { Form, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+    Form,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import FormError from "@/components/form-error";
 import FormSuccess from "@/components/form-success";
+
 import { register } from "@/actions/register";
-import { useState, useTransition } from "react";
 
 export const RegisterForm = () => {
     const [error, setError] = useState<string | undefined>("");
@@ -22,6 +30,7 @@ export const RegisterForm = () => {
     const form = useForm<z.infer<typeof RegisterSchema>>({
         resolver: zodResolver(RegisterSchema),
         defaultValues: {
+            name: "",
             email: "",
             password: "",
         },
@@ -29,12 +38,12 @@ export const RegisterForm = () => {
 
     const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
         setError("");
-        setSuccess(""); 
+        setSuccess("");
 
         startTransition(() => {
             register(values).then((data) => {
-                setError(data.error);
-                setSuccess(data.success);
+                setError(data?.error);
+                setSuccess(data?.success);
             });
         });
     };
@@ -47,7 +56,10 @@ export const RegisterForm = () => {
             showSocial
         >
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className=" space-y-6">
+                <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className=" space-y-6"
+                >
                     <div className=" space-y-4">
                         <FormField
                             control={form.control}
@@ -55,7 +67,11 @@ export const RegisterForm = () => {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Name</FormLabel>
-                                    <Input {...field} disabled={isPending} placeholder="John Doe" />
+                                    <Input
+                                        {...field}
+                                        disabled={isPending}
+                                        placeholder="John Doe"
+                                    />
                                     <FormMessage />
                                 </FormItem>
                             )}
@@ -82,7 +98,12 @@ export const RegisterForm = () => {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Password</FormLabel>
-                                    <Input {...field} disabled={isPending} placeholder="********" type="password" />
+                                    <Input
+                                        {...field}
+                                        disabled={isPending}
+                                        placeholder="********"
+                                        type="password"
+                                    />
                                     <FormMessage />
                                 </FormItem>
                             )}
@@ -91,7 +112,7 @@ export const RegisterForm = () => {
                     <FormError message={error} />
                     <FormSuccess message={success} />
                     <Button className="w-full" type="submit">
-                        Login
+                        Register
                     </Button>
                 </form>
             </Form>

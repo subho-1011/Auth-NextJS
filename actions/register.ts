@@ -3,9 +3,12 @@
 import { z } from "zod";
 import bcrypt from "bcryptjs";
 
-import { RegisterSchema } from "@/schemas";
 import { db } from "@/lib/db";
+
+import { RegisterSchema } from "@/schemas";
+
 import { getUserByEmail } from "@/data/user";
+
 import { generateVerificationToken } from "@/lib/token";
 import { sendVerificationEmail } from "@/lib/mail";
 
