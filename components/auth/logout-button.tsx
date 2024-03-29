@@ -9,11 +9,9 @@ export const LogoutButton = ({ children }: { children?: React.ReactNode }) => {
 
     const onClick = () => {
         logout();
-        setTimeout(() => {}, 100);
-        router.push("/");
     };
     return (
-        <span onClick={onClick} className=" cursor-pointer">
+        <span onClick={onClick} className="cursor-pointer">
             {children}
         </span>
     );

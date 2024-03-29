@@ -30,7 +30,7 @@ export const UserButton = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent>
                 <LogoutButton>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem className="cursor-pointer">
                         <ExitIcon className=" h-4 w-4 mr-2" />
                         Logout
                     </DropdownMenuItem>

@@ -9,7 +9,7 @@ export const SettingsSchema = z
         name: z.optional(z.string()),
         isTwoFactorEnabled: z.optional(z.boolean()),
         role: z.enum([UserRole.ADMIN, UserRole.USER]),
-        email: z.optional(z.string()),
+        email: z.optional(z.string().toLowerCase()),
         password: z.optional(z.string().min(6)),
         newPassword: z.optional(z.string().min(6)),
     })
@@ -41,7 +41,7 @@ export const SettingsSchema = z
     );
 
 export const LoginSchema = z.object({
-    email: z.string().email(),
+    email: z.string().email().toLowerCase(),
     password: z.string().min(1, {
         message: "Password is required",
     }),
@@ -51,7 +51,7 @@ export const LoginSchema = z.object({
 export type LoginSchemaType = z.infer<typeof LoginSchema>;
 
 export const RegisterSchema = z.object({
-    email: z.string().email(),
+    email: z.string().email().toLowerCase(),
     password: z.string().min(6, {
         message: "Minimum 6 characters required",
     }),
@@ -61,7 +61,7 @@ export const RegisterSchema = z.object({
 });
 
 export const ResetSchema = z.object({
-    email: z.string().email(),
+    email: z.string().email().toLowerCase(),
 });
 
 export const NewPasswordSchema = z.object({

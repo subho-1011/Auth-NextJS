@@ -6,6 +6,14 @@
 export const publicRoutes = ["/", "/auth/new-verification"];
 
 /**
+ * An array of routes that are accessible to the private
+ * These routes need to be authenticated
+ * @type {string[]}
+ */
+
+export const privateRoutes = ["/settings", "/admin", "/server", "/client"];
+
+/**
  * An array of routes that are user for authenticated
  * These routes will be redirect logged in users to /settings
  * @type {string[]}
@@ -30,3 +38,5 @@ export const apiAuthPrefix = "/api/auth";
  * @type {string}
  */
 export const DEFAULT_LOGIN_REDIRECT = "/settings";
+
+
